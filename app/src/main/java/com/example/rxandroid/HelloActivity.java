@@ -31,30 +31,11 @@ public class HelloActivity extends AppCompatActivity {
 
         mUnbinder = ButterKnife.bind(this);
 
-        DisposableObserver<String> observer = new DisposableObserver<String>() {
-            @Override
-            public void onNext(String s) {
-                textView.setText(s);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        };
-
-        mDisposable = Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-                emitter.onNext("Hello world");
-                emitter.onComplete();
-            }
-        }).subscribeWith(observer);
+//        mDisposable = Observable.create((ObservableOnSubscribe<String>) emitter -> {
+////            emitter.onNext("Hello world");
+////            emitter.onComplete();
+////        }).subscribe(o -> textView.setText(o));
+        Observable.just("what? does it works?").subscribe(textView::setText);
     }
 
     @Override
