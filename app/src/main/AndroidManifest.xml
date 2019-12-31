@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".HelloActivity">
+
+        </activity>
+        <activity android:name=".LoopActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
