@@ -1,4 +1,4 @@
-package com.example.rxandroid;
+package com.example.rxandroid.activities;
 
 import android.os.Bundle;
 import android.widget.ListView;
@@ -6,6 +6,9 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.rxandroid.LogAdapter;
+import com.example.rxandroid.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
