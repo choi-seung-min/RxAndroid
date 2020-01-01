@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.trello.rxlifecycle2.RxLifecycle;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -14,7 +17,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
-public class HelloActivity extends AppCompatActivity {
+public class HelloActivity extends RxAppCompatActivity {
 
     public static final String TAG = HelloActivity.class.getSimpleName();
 
@@ -35,7 +38,9 @@ public class HelloActivity extends AppCompatActivity {
 ////            emitter.onNext("Hello world");
 ////            emitter.onComplete();
 ////        }).subscribe(o -> textView.setText(o));
-        Observable.just("what? does it works?").subscribe(textView::setText);
+        Observable.just("Hello RxJava")
+                .compose(bindToLifecycle())
+                .subscribe(textView::setText);
     }
 
     @Override
