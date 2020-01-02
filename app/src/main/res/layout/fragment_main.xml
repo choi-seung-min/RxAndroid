@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context="com.example.rxandroid.activities.MainActivity"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_hello"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello"/>
+
+    <Button
+        android:id="@+id/btn_click_observer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Click Observer"/>
+
+    <Button
+        android:id="@+id/btn_debounce"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Debounce"/>
+
+    <Button
+        android:id="@+id/btn_debounce_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Debounce Search"/>
+
+    <Button
+        android:id="@+id/btn_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="recyclerview"/>
+
+    <Button
+        android:id="@+id/btn_volley"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="volley"/>
+
+    <Button
+        android:id="@+id/btn_okHttp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="okHttp"/>
+
+    <Button
+        android:id="@+id/btn_scheduler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Scheduler"/>
+
+    <Button
+        android:id="@+id/btn_polling"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Polling"/>
+
+</LinearLayout>

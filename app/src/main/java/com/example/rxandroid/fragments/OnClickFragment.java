@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.rxandroid.LogAdapter;
 import com.example.rxandroid.R;
+import com.jakewharton.rxbinding3.view.RxView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,18 +57,36 @@ public class OnClickFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         getClickEventObservable()
                 .map(s -> "Clicked")
                 .subscribe(getObserver());
+
+        getClickEventObservableWithLambda()
+                .map(s -> "Clicked Lambda")
+                .subscribe(this::log);
+
+        getClickEventObservableWithRxBinding()
+                .subscribe(this::log);
     }
 
     private Observable<View> getClickEventObservable() {
         return Observable.create(new ObservableOnSubscribe<View>() {
             @Override
-            public void subscribe(ObservableEmitter<View> emitter) throws Exception {
-                mButton.setOnClickListener(emitter::onNext);
+            public void subscribe(ObservableEmitter<View> e) throws Exception {
+                mButton.setOnClickListener(e::onNext);
             }
         });
+    }
+
+    private Observable<View> getClickEventObservableWithLambda() {
+        return Observable.create(s -> mButtonLambda.setOnClickListener(s::onNext));
+    }
+
+
+    private Observable<String> getClickEventObservableWithRxBinding() {
+        return RxView.clicks(mButtonBinding)
+                .map(s -> "Clicked Binding");
     }
 
     private DisposableObserver<? super String> getObserver() {
