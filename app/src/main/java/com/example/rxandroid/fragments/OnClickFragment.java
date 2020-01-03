@@ -17,6 +17,7 @@ import com.jakewharton.rxbinding3.view.RxView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,6 +69,11 @@ public class OnClickFragment extends Fragment {
 
         getClickEventObservableWithRxBinding()
                 .subscribe(this::log);
+
+        getClickEventObservableExtra()
+                .map(local -> SEVEN)
+                .flatMap(this::compareNumbers)
+                .subscribe(this::log);
     }
 
     private Observable<View> getClickEventObservable() {
@@ -87,6 +93,19 @@ public class OnClickFragment extends Fragment {
     private Observable<String> getClickEventObservableWithRxBinding() {
         return RxView.clicks(mButtonBinding)
                 .map(s -> "Clicked Binding");
+    }
+
+    private Observable<View> getClickEventObservableExtra(){
+        return Observable.create(s -> mButtonExtra.setOnClickListener(s::onNext));
+    }
+
+    private Observable<String> compareNumbers(int input){
+        return Observable.just(input)
+                .flatMap(in -> {
+                    Random random = new Random();
+                    int data = random.nextInt(10);
+                    return Observable.just("local: " + in, "remote: " + data, "result= " + (in == data));
+                });
     }
 
     private DisposableObserver<? super String> getObserver() {
