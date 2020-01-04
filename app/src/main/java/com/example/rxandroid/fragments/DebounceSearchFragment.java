@@ -16,6 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.rxandroid.LogAdapter;
 import com.example.rxandroid.R;
+import com.jakewharton.rxbinding3.view.RxView;
+import com.jakewharton.rxbinding3.widget.RxTextView;
+import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +73,12 @@ public class DebounceSearchFragment extends Fragment {
                 .filter(s -> !TextUtils.isEmpty(s))
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(getObserver());
+
+        mDisposable = RxTextView.textChangeEvents(mSearchBox)
+                .debounce(400, TimeUnit.MILLISECONDS)
+                .filter(s -> !TextUtils.isEmpty(s.getText().toString()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(getObserverLib());
     }
 
     private Observable<CharSequence> getObservable() {
@@ -105,6 +114,25 @@ public class DebounceSearchFragment extends Fragment {
             }
         };
     }
+
+    // with RxView Libs
+    private DisposableObserver<TextViewTextChangeEvent> getObserverLib() {
+        return new DisposableObserver<TextViewTextChangeEvent>() {
+            @Override
+            public void onNext(TextViewTextChangeEvent view) {
+                log("Search " + view.getText().toString());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onComplete() {
+            }
+        };
+    }
+
 
     private void log(String log) {
         mLogs.add(log);
