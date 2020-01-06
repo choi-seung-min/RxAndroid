@@ -22,7 +22,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<RecyclerItem> mItems = new ArrayList<>();
     private PublishSubject<RecyclerItem> mPublishSubject;
 
-    RecyclerViewAdapter() {
+    public RecyclerViewAdapter() {
         this.mPublishSubject = PublishSubject.create();
     }
 

@@ -6,6 +6,11 @@ public class RecyclerItem {
     private Drawable image;
     private String title;
 
+    public RecyclerItem(Drawable image, String title) {
+        this.image = image;
+        this.title = title;
+    }
+
     public Drawable getImage() {
         return image;
     }

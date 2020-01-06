@@ -42,6 +42,9 @@ public class MainFragment extends Fragment {
     @OnClick(R.id.btn_debounce_search)
     void demoDebounceSearch() { startDemo(new DebounceSearchFragment()); }
 
+    @OnClick(R.id.btn_recycler_view)
+    void demoClickRecycle() { startDemo(new RecyclerViewFragment());}
+
     private void startDemo(@NonNull Fragment fragment) {
         final String tag = fragment.getClass().getSimpleName();
         getActivity().getSupportFragmentManager()
