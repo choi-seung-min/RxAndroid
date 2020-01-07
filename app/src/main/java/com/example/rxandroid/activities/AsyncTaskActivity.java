@@ -2,6 +2,7 @@ package com.example.rxandroid.activities;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -12,6 +13,10 @@ import com.example.rxandroid.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.MaybeObserver;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class AsyncTaskActivity extends AppCompatActivity {
 
@@ -31,6 +36,7 @@ public class AsyncTaskActivity extends AppCompatActivity {
 
         mUnbinder = ButterKnife.bind(this);
         initAndroidAsync();
+        initRxAsync();
     }
 
     @Override
@@ -60,5 +66,41 @@ public class AsyncTaskActivity extends AppCompatActivity {
             super.onPostExecute(result);
             mAndroidTextView.setText(result);
         }
+    }
+
+    private MaybeObserver<String> getObserver(){
+        return new MaybeObserver<String>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                mRxTextView.setText(s);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e(TAG, e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                Log.i(TAG, "Done");
+            }
+        };
+    }
+
+    private void initRxAsync(){
+        Observable.just("Hello", "Rx", "world")
+                .reduce((x, y) -> x + " " + y)
+                .observeOn(AndroidSchedulers.mainThread())
+                //.subscribe(getObserver()) <- same as below
+                .subscribe(
+                        mRxTextView::setText,
+                        e -> Log.e(TAG, e.getMessage()),
+                        () -> Log.i(TAG, "Done")
+                );
     }
 }
