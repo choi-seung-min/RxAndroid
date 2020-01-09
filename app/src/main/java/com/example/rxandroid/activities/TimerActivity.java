@@ -56,6 +56,38 @@ public class TimerActivity extends AppCompatActivity {
 
     public void stop() {
         timerStop();
+        countDownTimerStop();
+    }
+
+    //CountDownTimer
+    private static final int MILLISINFUTURE = 11 * 1000;
+    private static final int COUNT_DOWN_INTERVAL = 1000;
+
+    CountDownTimer mCountDownTimer;
+
+    private void initCountDownTask() {
+        mCountDownTimer = new CountDownTimer(MILLISINFUTURE, COUNT_DOWN_INTERVAL) {
+            @Override
+            public void onTick(long l) {
+                mTextView.setText(String.valueOf(count--));
+            }
+
+            @Override
+            public void onFinish() {
+                mTextView.setText("Finish .");
+            }
+        };
+    }
+
+    public void countDownTimerStart() {
+        count = 10;
+        mCountDownTimer.start();
+    }
+
+    public void countDownTimerStop() {
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+        }
     }
 
     @OnClick(R.id.button)
@@ -64,12 +96,19 @@ public class TimerActivity extends AppCompatActivity {
         timerStart();
     }
 
+    @OnClick(R.id.button2)
+    void countDownTask() {
+        stop();
+        countDownTimerStart();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
         mUnbinder = ButterKnife.bind(this);
+        initCountDownTask();
     }
 
     @Override
