@@ -57,6 +57,7 @@ public class TimerActivity extends AppCompatActivity {
     public void stop() {
         timerStop();
         countDownTimerStop();
+        handlerStop();
     }
 
     //CountDownTimer
@@ -90,6 +91,32 @@ public class TimerActivity extends AppCompatActivity {
         }
     }
 
+    //Handler
+    private Handler mHandler;
+    private Runnable timer = new Runnable() {
+        public void run() {
+            // write here whaterver you want to repeat
+            mTextView.setText(String.valueOf(count++));
+            mHandler.postDelayed(this, 1000);
+        }
+    };
+
+    private void initHandler() {
+        mHandler = new Handler();
+    }
+
+
+    public void handerStart() {
+        count = 0;
+        mHandler.postDelayed(timer, 0);
+    }
+
+    public void handlerStop() {
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+        }
+    }
+
     @OnClick(R.id.button)
     void timerTask() {
         stop();
@@ -102,6 +129,12 @@ public class TimerActivity extends AppCompatActivity {
         countDownTimerStart();
     }
 
+    @OnClick(R.id.button3)
+    void handler() {
+        stop();
+        handerStart();
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +142,7 @@ public class TimerActivity extends AppCompatActivity {
 
         mUnbinder = ButterKnife.bind(this);
         initCountDownTask();
+        initHandler();
     }
 
     @Override
