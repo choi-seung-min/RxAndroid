@@ -45,6 +45,9 @@ public class MainFragment extends Fragment {
     @OnClick(R.id.btn_recycler_view)
     void demoClickRecycle() { startDemo(new RecyclerViewFragment());}
 
+    @OnClick(R.id.btn_polling)
+    void demoPolling() { startDemo(new PollingFragment()); }
+
     private void startDemo(@NonNull Fragment fragment) {
         final String tag = fragment.getClass().getSimpleName();
         getActivity().getSupportFragmentManager()
