@@ -58,6 +58,9 @@ public class PollingFragment extends Fragment {
     @OnClick(R.id.btn_polling)
     void polling() { startPollingV1(); }
 
+    @OnClick(R.id.btn_polling2)
+    void polling2() { startPollingV2(); }
+
 
     private void startPollingV1() {
 
@@ -65,6 +68,16 @@ public class PollingFragment extends Fragment {
                 .flatMap(o -> Observable.just("polling #1 " + o.toString()));
 
         ob.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::log);
+    }
+
+    private void startPollingV2() {
+
+        Observable<String> ob2 = Observable.just("polling #2")
+                .repeatWhen(o -> o.delay(3, TimeUnit.SECONDS));
+
+        ob2.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::log);
     }
